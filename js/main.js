@@ -1,3 +1,7 @@
+import conditions from '../conditions.js'
+
+console.log(conditions)
+
 const APIKEY = "a0435eb8ae85427cb7c83105230106";
 
 const form = document.querySelector(".form");
@@ -23,11 +27,17 @@ form.addEventListener("submit", async function (e) {
     showError();
   } else {
     clearCard();
-    showTheWeather(result);
+
+        console.log()
+      let info = conditions.find((el) => el.code === result.current.condition.code)
+  
+   
+
+    showTheWeather(result,info);
   }
 });
 
-function showTheWeather(result) {
+function showTheWeather(result,info) {
   const html = `
     <main class="card">
          <h2 class="card-city">${result.location.name}<span>${result.location.country}</span></h2>
@@ -35,7 +45,7 @@ function showTheWeather(result) {
              <div class="card-value">${result.current.temp_c}<sup>°C</sup> </div>
              <img class="card-image" src="./image/sun/26.png"  alt="">
          </div>
-        <div class="card-desc">${result.current.condition.text}</div>
+        <div class="card-desc">${result.current.is_day ? info.languages[23]['day_text'] : info.languages[23]['night_text']}</div>
     </main>
     `;
 
