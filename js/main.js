@@ -28,22 +28,26 @@ form.addEventListener("submit", async function (e) {
   } else {
     clearCard();
 
-        console.log()
+      
       let info = conditions.find((el) => el.code === result.current.condition.code)
   
+      let fileName =  (result.current.is_day ? info.day : info.night) + '.png';
+      let filePath = result.current.is_day ? 'day/'+fileName : 'night/'+fileName;
+
+      console.log('fileName', fileName)
    
 
-    showTheWeather(result,info);
+    showTheWeather(result,info,filePath);
   }
 });
 
-function showTheWeather(result,info) {
+function showTheWeather(result,info,filePath) {
   const html = `
     <main class="card">
          <h2 class="card-city">${result.location.name}<span>${result.location.country}</span></h2>
          <div class="card-weather">
              <div class="card-value">${result.current.temp_c}<sup>°C</sup> </div>
-             <img class="card-image" src="./image/sun/26.png"  alt="">
+             <img class="card-image" src="./image/${filePath}"  alt="">
          </div>
         <div class="card-desc">${result.current.is_day ? info.languages[23]['day_text'] : info.languages[23]['night_text']}</div>
     </main>
